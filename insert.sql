@@ -61,11 +61,11 @@ JOIN contacts AS c ON c.user_id=u.user_id GROUP BY u.user_id;
 -- aggregate array_agg
 SELECT 
     u.user_id,
-    CONCAT(u.firs_tname, ' ' ,u.last_name) AS full_name,
+    CONCAT(u.first_name, ' ' ,u.last_name) AS full_name,
     array_agg(c.content) AS phone_number
 FROM users AS u
 JOIN contacts AS c ON c.user_id=u.user_id GROUP BY u.user_id;
 
 
-SELECT * FROM "users";
-SELECT * FROM "contacts";
+-- SELECT * FROM "users";
+-- SELECT * FROM "contacts";

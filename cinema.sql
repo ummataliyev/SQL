@@ -44,9 +44,33 @@ GROUP BY f.user_id, u.name
 SELECT
     f.user_id,
     u.name AS user,
+    count(m.name) AS movies,
     array_agg(m.name) AS movies
 FROM favourites AS f
 NATURAL JOIN users AS u
-NATURAL JOIN movies AS m
+JOIN movies AS m on m.movie_id = f.movie_id
 GROUP BY f.user_id, u.name, f.movie_id
 ;
+
+-- DO $$
+--     DECLARE
+--         movie_name CHARACTER VARYING;
+--     BEGIN
+--         SELECT name INTO movie_name FROM movies WHERE movie_id = 1;
+--         RAISE info '%', movie_name; 
+--     END $$;
+
+-- CREATE FUNCTION greeting() RETURNS INT AS $$
+--     BEGIN
+--         RAISE NOTICE 'Hello World';
+--         RETURN 1;
+--     END;
+
+
+
+-- CREATE FUNCTION fav_movies(id INT) RETURNS TABLE(name VARCHAR) AS $$
+-- BEGIN
+--     RETURN QUERY SELECT name FROM favourites WHERE id = id;
+-- END;
+-- $$ LANGUAGE plpgsql;
+

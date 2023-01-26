@@ -74,3 +74,74 @@ GROUP BY f.user_id, u.name, f.movie_id
 -- END;
 -- $$ LANGUAGE plpgsql;
 
+DO
+$$
+    DECLARE
+        i INT := 1;
+        movie movies%rowtype;
+    BEGIN
+
+        LOOP
+
+            IF i = 10 THEN
+                EXIT;
+            END IF;
+
+            SELECT
+                *
+            FROM
+                movies
+            INTO
+                movie
+            WHERE
+                movie_id = i;
+            RAISE INFO '%', movie.name;
+
+            i = i + 1;
+        END LOOP;
+    END;
+$$;
+
+DO $$
+DECLARE
+    q text := 'SELECT * FROM';
+    t text := 'movies';
+    r movies%rowtype;
+BEGIN
+    EXECUTE q || ' ' || t INTO r;
+    FOR i IN 1..10 LOOP
+        RAISE INFO '%', r;
+    END LOOP;
+END;
+$$
+;
+
+SELECT *
+FROM generate_series (1, 10)
+;
+
+SELECT *
+FROM generate_series (0.1, 10, 0.1)
+;
+
+SELECT extract(year from table1.year)
+FROM generate_series(
+    '1994-01-01 00:00' ::TIMESTAMP,
+    '2021-01-13 00:00' ::TIMESTAMP,
+    '1 year'
+) AS table1(year)
+;
+SELECT * FROM users;
+
+SELECT t.n
+FROM generate_series(1,100) AS t(n)
+;
+
+--Adding users via code
+INSERT INTO users(user_id, name)
+SELECT t.n, 'User' || t.n
+FROM generate_series(4, 5) AS t(n)
+;
+
+--result
+SELECT * FROM users;

@@ -1,13 +1,13 @@
 -- Active: 1674727167434@@127.0.0.1@55000@postgres
-DROP TABLE IF EXISTS components;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS types;
-DROP TABLE IF EXISTS type_register;
-DROP TABLE IF EXISTS tables;
-DROP TABLE IF EXISTS products;
-DROP TABLE IF EXISTS ingredients;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS order_details;
+DROP TABLE IF EXISTS components CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS types CASCADE;
+DROP TABLE IF EXISTS type_register CASCADE;
+DROP TABLE IF EXISTS tables CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS ingredients CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
+DROP TABLE IF EXISTS order_details CASCADE;
 
 CREATE TABLE components (
 component_id SERIAL PRIMARY KEY,
@@ -72,3 +72,29 @@ COMMENT ON TABLE products is 'Finished products';
 COMMENT ON TABLE ingredients is 'Recieps';
 COMMENT ON TABLE orders is 'Orders';
 COMMENT ON TABLE order_details is 'Order details';
+
+--Inserts
+INSERT INTO components(name) VALUES ('Potato'), ('Carrot'), ('Rice'), ('Onion'), ('Cucumber');
+
+INSERT INTO categories(name) VALUES ('National foods'), ('Europe foods'), ('Drinks');
+
+INSERT INTO types(name) VALUES ('Dark foods'), ('Liquid foods'), ('Cold drinks'), ('Hot drinks'), ('Energetic');
+
+INSERT INTO type_register(category_id, type_id) VALUES
+(1, 1), (1, 2), (1, 3),
+(2, 3),
+(3, 4),
+(3, 5),
+(3, 6);
+
+INSERT INTO tables (number) VALUES (101), (102), (103), (104);
+
+INSERT INTO products (name, price, type_register_id) VALUES
+('Plov', 16000, 1),
+("Mastava", 12000, 2),
+('Olivie', 18000, 4),
+('Coca-Cola', 5000, 5),
+('Moxito', 11000, 5),
+('Choy', 3000, 6),
+('Limon choy', 5000, 6),
+('Red-Bull 500ml', 28000, 7);

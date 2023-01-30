@@ -1,4 +1,4 @@
--- Active: 1673182399012@@127.0.0.1@55000@myproject
+-- Active: 1675071918474@@127.0.0.1@55000@postgres
 -- data definition create
 CREATE TABLE book_store_categories(
     category_id SERIAL NOT NULL PRIMARY KEY,

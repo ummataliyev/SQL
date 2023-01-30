@@ -98,3 +98,34 @@ INSERT INTO products (name, price, type_register_id) VALUES
 ('Choy', 3000, 6),
 ('Limon choy', 5000, 6),
 ('Red-Bull 500ml', 28000, 7);
+
+
+SELECT
+    sum(d.quantitiy) AS quantitiy,
+    p.name,
+    p.type_register_id
+FROM
+    order_details AS d
+JOIN
+    products AS p using(product_id)
+GROUP BY
+    d.product_id,
+    p.type_register_id,
+    p.name
+ORDER BY
+    p.type_register_id,
+    quantity DESC
+;
+
+SELECT
+    ROW_NUMBER()
+    d.*
+FROM
+    order_dertails AS d 
+WHERE d.qunatity <>2
+;
+
+SELECT
+    ROW_NUMBER() OVER(ORDER BY product_id DESC) * product_id AS x,
+    y.*
+FROM product AS y;

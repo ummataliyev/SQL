@@ -28,3 +28,10 @@ UPDATE
     cars
 SET colors = array['white']
 WHERE id=3;
+
+SELECT array_append(array['A', 'B'], 'C');
+SELECT array_prepend('C', array['A', 'B']);
+SELECT array_position(array['A', 'B', 'C'], 'C');
+SELECT array_remove(array['A', 'B', 'C'], 'B');
+
+colors = array_remove(colors, 'black');

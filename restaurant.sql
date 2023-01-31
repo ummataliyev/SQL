@@ -1,4 +1,4 @@
--- Active: 1674727167434@@127.0.0.1@55000@postgres
+-- Active: 1675071918474@@127.0.0.1@55000@postgres
 DROP TABLE IF EXISTS components CASCADE;
 DROP TABLE IF EXISTS categories CASCADE;
 DROP TABLE IF EXISTS types CASCADE;
@@ -129,3 +129,40 @@ SELECT
     ROW_NUMBER() OVER(ORDER BY product_id DESC) * product_id AS x,
     y.*
 FROM product AS y;
+
+SELECT
+    t.name AS type,
+    x.name AS product,
+    x.quantity AS total
+FROM
+    (
+        SELECT
+            sum(d.quantity) AS quantity,
+            p.type_register_id, 
+            p.name,
+            tr.type_id AS type_id,
+            row_number() over (
+                paritation by p.type_register_id
+                order by sum(d.quantitiy) desc
+            ) AS r
+        FROM
+            oreder_details AS d
+        JOIN
+            products AS p using (product_id)
+        JOIN
+            tyoe_register AS tr on tr.type_register_id = p.type_register_id
+        GROUP BY
+            d.product_id, 
+            p.type_register_id,
+            p.name,
+            tr.type_id
+        ORDER BY
+            p.type_register_id,
+            quantity DESC
+    ) AS x
+JOIN
+    types AS t using(type_id)
+WHERE
+    x.r <= 2
+;
+

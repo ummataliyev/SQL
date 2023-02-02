@@ -1,0 +1,11 @@
+-- Active: 1675339339669@@127.0.0.1@55000@postgres
+CREATE OR REPLACE PROCEDURE fn()
+LANGUAGE PLPGSQL AS
+$$
+    BEGIN
+        RAISE INFO 'Ok';
+        RETURN;
+        RAISE INFO 'Ok Ok';
+    END;
+$$;
+

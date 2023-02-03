@@ -49,6 +49,8 @@ CREATE TYPE my_row AS (
     name  VARCHAR
 );
 
+CREATE DOMAIN valid_name AS VARCHAR(20) not NULL;
+
 CREATE TABLE accounts (
     id SERIAL NOT NULL PRIMARY KEY,
     fname VARCHAR(20) NOT NULL,
@@ -56,3 +58,15 @@ CREATE TABLE accounts (
     gender gender,
     balance DECIMAL(16, 2) NULL
 );
+
+CREATE FUNCTION f1()
+RETURNS product%rowtype
+LANGUAGE PLPGSQL AS
+$$
+    BEGIN
+        RETURN query SELECT * FROM products;
+    END;
+$$;
+
+-- returns table (like products)
+-- retunrs setof products
